@@ -45,7 +45,7 @@ def extract_scenario_data(file, fps=30):
     return numpy.array(led_0), numpy.array(led_1), numpy.array(trig_0), numpy.array(trig_1)
 
 
-def compute_time_shift(ledmeasure, ledtheory, plot=True):
+def compute_time_shift(ledmeasure, ledtheory, plot=True, save_plot_fname=None, fps=30):
     # print(datapack[key])
     ledint = numpy.array(ledmeasure)
     ledint = ledint-numpy.min(ledint)
@@ -57,10 +57,15 @@ def compute_time_shift(ledmeasure, ledtheory, plot=True):
     time_shift = numpy.argmax(numpy.correlate(ledint, ledtheory,'valid'))
 
     if plot :
-        fig = matplotlib.pyplot.figure(figsize=(12,2))
-        matplotlib.pyplot.plot(range(ledint.shape[0]), ledint, 'g', label='Measurement')
-        matplotlib.pyplot.plot(numpy.array(range(ledtheory.shape[0])), ledtheory, ':b', label='Theory')
-        matplotlib.pyplot.plot(numpy.array(range(ledtheory.shape[0]))+time_shift, ledtheory, 'r', label='Theory_corrected')
+        fig = matplotlib.pyplot.figure(figsize=(12,5))
+        matplotlib.pyplot.plot(numpy.array(range(ledint.shape[0]))/fps, ledint, 'g', label='Measurement')
+        matplotlib.pyplot.plot(numpy.array(range(ledtheory.shape[0]))/fps, ledtheory, ':b', label='Theory')
+        matplotlib.pyplot.plot((numpy.array(range(ledtheory.shape[0]))+time_shift)/fps, ledtheory, 'r', label='Theory_corrected')
         matplotlib.pyplot.legend()
+        matplotlib.pyplot.title('LED visual intensity pattern and LED command pattern timing matching')
+        matplotlib.pyplot.xlabel('Time [s]')
+        matplotlib.pyplot.ylabel('Theoritical and observed LED intensity [-]')
+        if not(save_plot_fname==None):
+            matplotlib.pyplot.savefig(save_plot_fname)
 
     return time_shift

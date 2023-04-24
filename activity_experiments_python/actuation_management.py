@@ -51,7 +51,7 @@ def update_actuation_pattern(apattern, apel0, apel1, index):
     return apattern
 
 
-def create_actuation_pattern(trig0, trig1, ampconfig, sigconfig, plot=True):
+def create_actuation_pattern(trig0, trig1, ampconfig, sigconfig, plot=True, save_plot_fname=None, fps=30):
     trig_length = trig0.shape[0]
 
     actuators_onoff = {
@@ -88,10 +88,15 @@ def create_actuation_pattern(trig0, trig1, ampconfig, sigconfig, plot=True):
         #     break
 
     if plot :
-        _, ax = matplotlib.pyplot.subplots(8, 1, figsize=(12,10))
+        _, ax = matplotlib.pyplot.subplots(8, 1, figsize=(12,7), sharex=True)
         for idkey, key in enumerate(actuation_pattern['onoff'].keys()):
             onoff_sig = actuation_pattern['onoff'][key]
-            ax[idkey].plot(range(len(onoff_sig)), onoff_sig)
+            ax[idkey].plot(numpy.array(range(len(onoff_sig)))/fps, onoff_sig)
+        ax[0].set_title('Actuation commands for the different actuators')
+        matplotlib.pyplot.xlabel('Time [s]')
+        ax[4].set_ylabel('ON/OFF representation for each actuator [-]')
+        if not(save_plot_fname==None):
+            matplotlib.pyplot.savefig(save_plot_fname)
             
     for key in actuation_pattern['onoff']:
         actuation_pattern['onoff'][key] = numpy.array(actuation_pattern['onoff'][key])
