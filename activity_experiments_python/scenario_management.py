@@ -5,14 +5,29 @@ import matplotlib
 import matplotlib.pyplot
 
 
-def extract_scenario_data(file, fps=30):
-    try :
-        f = open(file, "r")
-        lineup = json.load(f)
-        f.close()
-    except :
-        print('There was a problem reading/interpreting file {}. Quitting'.format(file))
-        return None, None
+def extract_scenario_data(file, fps=30, old_scenario=False):
+
+    experiment_lineup = dict()
+    if old_scenario:
+        try :
+            experiment_lineup = json.load(open(file))
+        except:
+            print('Unable to read scenario file. Quitting')
+    else :
+        try :
+            experiment_lineup_temp = json.load(open(file))
+        except:
+            print('Unable to read scenario file. Quitting')
+        for idline, line in enumerate(experiment_lineup_temp):
+            experiment_lineup[str(idline)] = line
+
+    # try :
+    #     f = open(file, "r")
+    #     lineup = json.load(f)
+    #     f.close()
+    # except :
+    #     print('There was a problem reading/interpreting file {}. Quitting'.format(file))
+    #     return None, None
 
     led_0 = [1]
     led_1 = [1]
