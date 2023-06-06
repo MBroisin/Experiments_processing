@@ -7,10 +7,10 @@ import matplotlib.pyplot
 
 def extract_scenario_data(file, fps=30, old_scenario=False):
 
-    experiment_lineup = dict()
+    lineup = dict()
     if old_scenario:
         try :
-            experiment_lineup = json.load(open(file))
+            lineup = json.load(open(file))
         except:
             print('Unable to read scenario file. Quitting')
     else :
@@ -19,7 +19,7 @@ def extract_scenario_data(file, fps=30, old_scenario=False):
         except:
             print('Unable to read scenario file. Quitting')
         for idline, line in enumerate(experiment_lineup_temp):
-            experiment_lineup[str(idline)] = line
+            lineup[str(idline)] = line
 
     # try :
     #     f = open(file, "r")
