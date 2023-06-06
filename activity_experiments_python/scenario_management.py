@@ -59,6 +59,52 @@ def extract_scenario_data(file, fps=30, old_scenario=False):
     
     return numpy.array(led_0), numpy.array(led_1), numpy.array(trig_0), numpy.array(trig_1)
 
+def extract_scenario_data_from_log(file, fps=30, old_scenario=False):
+    import json
+    flines = []
+    try :
+        f = open(file, "r")
+        flines = f.readlines()
+        f.close()
+    except :
+        print('There was a problem reading/interpreting file {}. Quitting'.format(file))
+        return None, None
+
+    led_0 = [1]
+    led_1 = [1]
+    trig_0 = [11]
+    trig_1 = [11]
+
+    try :
+        for logline in flines:
+            if ('Scen ' in logline):
+                lineup = json.loads(logline.split(' > ')[-1].replace("'", '"'))
+                continue
+
+        for key in lineup.keys():
+            if not(lineup[key][0]=='trig'):
+                led_0 += [led_0[-1]]*lineup[key][-1]*fps
+                led_1 += [led_1[-1]]*lineup[key][-1]*fps
+                trig_0 += [trig_0[-1]]*lineup[key][-1]*fps
+                trig_1 += [trig_1[-1]]*lineup[key][-1]*fps
+            else :
+                trig_0 += [lineup[key][1]]*lineup[key][-1]*fps
+                if (lineup[key][1]==11):
+                    led_0 += [1]*lineup[key][-1]*fps
+                else :
+                    led_0 += [0]*lineup[key][-1]*fps
+
+                trig_1 += [lineup[key][2]]*lineup[key][-1]*fps
+                if (lineup[key][2]==11):
+                    led_1 += [1]*lineup[key][-1]*fps
+                else :
+                    led_1 += [0]*lineup[key][-1]*fps
+
+    except :
+        print('Could not interpret scenario file. Quitting')
+    
+    return numpy.array(led_0), numpy.array(led_1), numpy.array(trig_0), numpy.array(trig_1)
+
 
 def compute_time_shift(ledmeasure, ledtheory, plot=True, save_plot_fname=None, fps=30):
     # print(datapack[key])
