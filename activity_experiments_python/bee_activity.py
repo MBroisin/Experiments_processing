@@ -94,7 +94,7 @@ def compute_video_intensity(video, cropX=None, cropY=None, frames='all'):
     
     cap = cv2.VideoCapture(video)
     
-    intensities = numpy.zeros(20000)
+    intensities = numpy.zeros(200000)
     
     if frames=='all':
         stop_frame=2000000000
