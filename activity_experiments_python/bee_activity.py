@@ -129,7 +129,7 @@ def compute_video_intensity(video, cropX=None, cropY=None, frames='all'):
         intensities[frame_count-1] = intensity
     return list(intensities[:(frame_count-2)])
 
-def show_video_frame(video, cropX=None, cropY=None, frame_of_interest=0):
+def show_video_frame(video, cropX=None, cropY=None, frame_of_interest=0, figfilename=None):
 
     cap = cv2.VideoCapture(video)
     
@@ -169,4 +169,6 @@ def show_video_frame(video, cropX=None, cropY=None, frame_of_interest=0):
             ax[1,1].imshow(equal_frame)
             ax[1,2].imshow(res_frame)
             fig.tight_layout()
+            if not(figfilename==None):
+                matplotlib.pyplot.savefig(figfilename)
             break
