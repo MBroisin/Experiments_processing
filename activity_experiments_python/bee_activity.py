@@ -34,7 +34,7 @@ def compute_video_activity(video, threshold=15, cropX=None, cropY=None, frames='
     cap = cv2.VideoCapture(video)
     
     prev_frame = numpy.array([])
-    activities = numpy.zeros(20000)
+    activities = numpy.zeros(2000000)
 
     if video_save:
         vid = [[]]*20000
