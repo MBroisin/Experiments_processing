@@ -10,9 +10,9 @@ parser.add_argument('-c', '--computer', type=str, default='beetle', help='option
 args = parser.parse_args()
 
 if args.computer == 'beetle':
-    ROOT_PATH   = '~/processing_broisin/overview/'
+    ROOT_PATH   = '/home/hiveopolis/processing_broisin/overview/'
 else :
-    ROOT_PATH   = '~/processing_broisin/overview/'
+    ROOT_PATH   = '/home/sting/processing_broisin/overview/'
 
 PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'
 video_file      = args.file
