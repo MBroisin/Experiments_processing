@@ -29,6 +29,8 @@ res_fields      = CH.get_results_df_fields(fields_file)
 # matplotlib.pyplot.show()
 # BA.show_video_frame(ROOT_PATH+video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frame_of_interest=10)
 # matplotlib.pyplot.show()
+BA.show_video_frame(video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frames=10, figfilename=ROOT_PATH+'/data/leds/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led0crop.png')
+BA.show_video_frame(video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frames=10, figfilename=ROOT_PATH+'/data/leds/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led1crop.png')
 
 led0_int = BA.compute_video_intensity(video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frames='all')
 led1_int = BA.compute_video_intensity(video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frames='all')
