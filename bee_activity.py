@@ -6,7 +6,8 @@ import pandas as pd
 import math
 
 ROOT_PATH       = '/Users/matthieu/.ssh/ssh_to_graz/wdd_beetle_testvideos/'
-PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'
+COMPUTER        = 'sting'
+PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'+COMPUTER+'/'
 video_file      = 'v_hive1_rpi4_230727-130000-utc.mp4'
 
 frame_pos_file   = PARAMS_PATH + 'frame_rpi4/frame_pos.json'

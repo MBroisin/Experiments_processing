@@ -1,0 +1,30 @@
+{
+    "0":{"from":"20230701T000000","to":"20230901T000000","config":
+		{"SB0":{
+    			"0":{"1":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"1":{"1":{"frequency":1250, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"2":{"1":{"frequency":1500, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"3":{"1":{"frequency":1750, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"4":{"1":{"frequency":2000, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"5":{"1":{}, "2":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"6":{"1":{}, "2":{"frequency":1250, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"7":{"1":{}, "2":{"frequency":1500, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"8":{"1":{}, "2":{"frequency":1750, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"9":{"1":{}, "2":{"frequency":2000, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"10":{"1":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}}
+		},
+		"SB1":{
+    			"0":{"1":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"1":{"1":{"frequency":1250, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"2":{"1":{"frequency":1500, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"3":{"1":{"frequency":1750, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"4":{"1":{"frequency":2000, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{}},
+    			"5":{"1":{}, "2":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"6":{"1":{}, "2":{"frequency":1250, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"7":{"1":{}, "2":{"frequency":1500, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"8":{"1":{}, "2":{"frequency":1750, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"9":{"1":{}, "2":{"frequency":2000, "duration":30, "amplitude":0.1, "shape":"sine"}},
+    			"10":{"1":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}, "2":{"frequency":1000, "duration":30, "amplitude":0.1, "shape":"sine"}}
+		}}
+	}
+}

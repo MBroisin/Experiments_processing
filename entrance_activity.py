@@ -6,7 +6,8 @@ import pandas as pd
 import datetime
 
 ROOT_PATH       = '/Users/matthieu/.ssh/ssh_to_graz/wdd_beetle_testvideos/'
-PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'
+COMPUTER        = 'sting'
+PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'+COMPUTER+'/'
 video_file      = 'v_hive1_rpi5_230727-130000-utc.mp4'
 
 tunnel_pos_file = PARAMS_PATH + 'entrance_rpi5/tunnel_pos.json'
