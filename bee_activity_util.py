@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', type=str, required=True, help='required, filename of input file')
 parser.add_argument('-c', '--computer', type=str, default='beetle', help='optional, name of the computer')
 parser.add_argument('-p', '--frames', type=str, default='all', help='optional, number of frames to process ("all" for all)')
+parser.add_argument('-s', '--sample', type=int, default=None, help='optional, number of frames to process and output visu for (None for no visu)')
 args = parser.parse_args()
 
 if args.frames == 'all':
@@ -89,6 +90,11 @@ import matplotlib.pyplot
 # led1_int = BA.compute_video_intensity(ROOT_PATH+video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frames='all')
 THRESHOLD_ACTIVITY = 10
 activity = [[]]*9
+
+if not(args.sample == None):
+    video_save_path = ROOT_PATH+'/data/acts/visu/'
+    video_save_fname = exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_za_visuacts.mp4'
+    _ = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=args.sample, video_save=True, video_filename=video_save_fname, video_foldername=video_save_path)
 
 def save_zone(z_i, activity):
     res=[[[], [], [], [], [], [], []]]*len(activity[z_i])
