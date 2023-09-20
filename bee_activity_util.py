@@ -4,11 +4,26 @@ import datetime
 # import pytz
 import pandas as pd
 import math
+import argparse
 
-ROOT_PATH       = '/Users/matthieu/.ssh/ssh_to_graz/wdd_beetle_testvideos/'
-COMPUTER        = 'sting'
-PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'+COMPUTER+'/'
-video_file      = 'v_hive1_rpi4_230727-130000-utc.mp4'
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--file', type=str, required=True, help='required, filename of input file')
+parser.add_argument('-c', '--computer', type=str, default='beetle', help='optional, name of the computer')
+parser.add_argument('-p', '--frames', type=str, default='all', help='optional, number of frames to process ("all" for all)')
+args = parser.parse_args()
+
+if args.frames == 'all':
+    FRAMES_TO_PROCESS = 'all'
+else :
+    FRAMES_TO_PROCESS = int(args.frames)
+
+if args.computer == 'beetle':
+    ROOT_PATH   = '/home/hiveopolis/processing_broisin/overview/'
+else :
+    ROOT_PATH   = '/home/sting/processing_broisin/overview/'
+
+PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'+args.computer+'/'
+video_file      = args.file
 
 frame_pos_file   = PARAMS_PATH + 'frame_rpi4/frame_pos.json'
 fields_file     = PARAMS_PATH + 'general/fields.json'
@@ -50,7 +65,7 @@ for key in CROPS:
         posy = mapping_index[6]%4
         CROPS[key]['x'] = [int(CROP_MARGIN/2)+OUTER_CROP_X[0], -int(CROP_MARGIN/2)+OUTER_CROP_X[1]]
         CROPS[key]['y'] = [int(CROP_MARGIN/2)+OUTER_CROP_Y[0], -int(CROP_MARGIN/2)+OUTER_CROP_Y[1]]
-# import matplotlib.pyplot
+import matplotlib.pyplot
 # BA.show_video_frame(ROOT_PATH+video_file, cropX=frame_pos['x'], cropY=frame_pos['y'], frame_of_interest=145)
 # matplotlib.pyplot.show()
 # BA.show_video_frame(ROOT_PATH+video_file, cropX=CROPS['0']['x'], cropY=CROPS['0']['y'], frame_of_interest=10)
@@ -73,19 +88,18 @@ for key in CROPS:
 # led0_int = BA.compute_video_intensity(ROOT_PATH+video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frames='all')
 # led1_int = BA.compute_video_intensity(ROOT_PATH+video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frames='all')
 THRESHOLD_ACTIVITY = 10
-FRAMES_TO_PROCESS = 'all'
 activity = [[]]*9
 
 # TIMING : around 11min33s for 100'000 frames - total 12min16s for 106'377 frames (zone 0)
 activity[0] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['0']['x'], cropY=CROPS['0']['y'], frames=FRAMES_TO_PROCESS)
-# activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
-# activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
-# activity[3] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['3']['x'], cropY=CROPS['3']['y'], frames=FRAMES_TO_PROCESS)
-# activity[4] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['4']['x'], cropY=CROPS['4']['y'], frames=FRAMES_TO_PROCESS)
-# activity[5] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['5']['x'], cropY=CROPS['5']['y'], frames=FRAMES_TO_PROCESS)
-# activity[6] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['6']['x'], cropY=CROPS['6']['y'], frames=FRAMES_TO_PROCESS)
-# activity[7] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['7']['x'], cropY=CROPS['7']['y'], frames=FRAMES_TO_PROCESS)
-# activity[8] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=FRAMES_TO_PROCESS)
+activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
+activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
+activity[3] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['3']['x'], cropY=CROPS['3']['y'], frames=FRAMES_TO_PROCESS)
+activity[4] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['4']['x'], cropY=CROPS['4']['y'], frames=FRAMES_TO_PROCESS)
+activity[5] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['5']['x'], cropY=CROPS['5']['y'], frames=FRAMES_TO_PROCESS)
+activity[6] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['6']['x'], cropY=CROPS['6']['y'], frames=FRAMES_TO_PROCESS)
+activity[7] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['7']['x'], cropY=CROPS['7']['y'], frames=FRAMES_TO_PROCESS)
+activity[8] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=FRAMES_TO_PROCESS)
 
 for i in range(9):
     res=[[]]*len(activity[i])

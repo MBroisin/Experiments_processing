@@ -8,7 +8,13 @@ import datetime
 ROOT_PATH       = '/Users/matthieu/.ssh/ssh_to_graz/wdd_beetle_testvideos/'
 COMPUTER        = 'sting'
 PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'+COMPUTER+'/'
-video_file      = '5mins_v_hive1_rpi5_230904-090011-utc.mp4'
+
+
+# video_file      = 'example_dawn.mp4'
+# video_file      = '5mins_v_hive1_rpi5_230904-090011-utc.mp4'
+# video_file      = '10mins_v_hive1_rpi5_230904-120011-utc.mp4'
+# video_file      = '15mins_v_hive1_rpi5_230904-103011-utc.mp4'
+video_file      = '30mins_v_hive1_rpi5_230905-090012-utc.mp4'
 
 # tunnel_pos_file = PARAMS_PATH + 'entrance_rpi5/tunnel_pos.json'
 fields_file     = PARAMS_PATH + 'general/fields.json'
@@ -17,7 +23,10 @@ exp_timestamp   = CH.datetime_from_filename(video_file)
 # tunnel_pos      = CH.get_tunnel_position(tunnel_pos_file, exp_timestamp)
 res_fields      = CH.get_results_df_fields(fields_file)
 
-tunnel_pos = {'x':[300, 675], 'y':[250, 1250]}
+tunnel_pos = {'x':[300, 675], 'y':[250, 450]}
+# tunnel_pos = {'x':[300, 690], 'y':[250, 1250]}
+# tunnel_pos = {'x':[300, 690], 'y':[250, 1000]}
+
 # import matplotlib.pyplot
 # BA.show_video_frame(ROOT_PATH+video_file, cropX=tunnel_pos['x'], cropY=tunnel_pos['y'], frame_of_interest=10)
 # matplotlib.pyplot.show()
@@ -32,8 +41,8 @@ if not capture.isOpened():
     exit(0)
 
 FRAMES_TO_DISCARD = 10
-# FRAMES_TO_PROCESS = 50
-MIN_AREA = 500
+FRAMES_TO_PROCESS = 54000 #54000 for 30 minutes
+MIN_AREA = 3000
 LOW_THRESHOLD=125
 HIGH_THRESHOLD=255
 area_cnt_tot = [None]*300000
@@ -50,8 +59,8 @@ while True:
     if frame_cnt < FRAMES_TO_DISCARD:
         continue
 
-    # if frame_cnt > FRAMES_TO_PROCESS:
-    #     break
+    if frame_cnt > FRAMES_TO_PROCESS:
+        break
 
     if frame_cnt%1000 == 0:
         print(frame_cnt)
