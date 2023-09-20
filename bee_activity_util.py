@@ -97,7 +97,7 @@ def save_zone(z_i, activity):
         crop_ind='a'
     for act_id, act in enumerate(activity[i]):
         act_ts = exp_timestamp + datetime.timedelta(seconds=(act_id+1)/30)
-        params = 'thresold={},cropX={},cropY={},cropZone={},crop_margin={}'.format(THRESHOLD_ACTIVITY, OUTER_CROP_X, OUTER_CROP_Y, CROPS[crop_ind], CROP_MARGIN)
+        params = 'thresold=' + str(THRESHOLD_ACTIVITY) + ',cropX=' + str(OUTER_CROP_X) + ',cropY=' + str(OUTER_CROP_Y) + ',cropZone=' + str(CROPS[crop_ind]) + ',crop_margin=' + str(CROP_MARGIN)
         res[act_id] = [act_ts, None, 'LEDs intensities', 'rpi4', params, act, '']
 
     res_df = pd.DataFrame(res, columns=res_fields['fields'])
