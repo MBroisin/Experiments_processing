@@ -91,7 +91,7 @@ THRESHOLD_ACTIVITY = 10
 activity = [[]]*9
 
 def save_zone(z_i, activity):
-    res=[[]]*len(activity[z_i])
+    res=[[[], [], [], [], [], [], []]]*len(activity[z_i])
     crop_ind = str(z_i)
     if crop_ind=='8':
         crop_ind='a'
