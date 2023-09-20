@@ -90,20 +90,9 @@ import matplotlib.pyplot
 THRESHOLD_ACTIVITY = 10
 activity = [[]]*9
 
-# TIMING : around 11min33s for 100'000 frames - total 12min16s for 106'377 frames (zone 0)
-activity[0] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['0']['x'], cropY=CROPS['0']['y'], frames=FRAMES_TO_PROCESS)
-activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
-activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
-activity[3] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['3']['x'], cropY=CROPS['3']['y'], frames=FRAMES_TO_PROCESS)
-activity[4] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['4']['x'], cropY=CROPS['4']['y'], frames=FRAMES_TO_PROCESS)
-activity[5] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['5']['x'], cropY=CROPS['5']['y'], frames=FRAMES_TO_PROCESS)
-activity[6] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['6']['x'], cropY=CROPS['6']['y'], frames=FRAMES_TO_PROCESS)
-activity[7] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['7']['x'], cropY=CROPS['7']['y'], frames=FRAMES_TO_PROCESS)
-activity[8] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=FRAMES_TO_PROCESS)
-
-for i in range(9):
-    res=[[]]*len(activity[i])
-    crop_ind = str(i)
+def save_zone(z_i, activity):
+    res=[[]]*len(activity[z_i])
+    crop_ind = str(z_i)
     if crop_ind=='8':
         crop_ind='a'
     for act_id, act in enumerate(activity[i]):
@@ -113,3 +102,34 @@ for i in range(9):
 
     res_df = pd.DataFrame(res, columns=res_fields['fields'])
     res_df.to_pickle(ROOT_PATH+'/data/acts/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_z{}_acts.pickle'.format(crop_ind))
+    print('Done with z{}'.format(crop_ind))
+
+# TIMING : around 11min33s for 100'000 frames - total 12min16s for 106'377 frames (zone 0)
+print('Starting processing {}'.format(video_file))
+for i in range(9):
+    ind = str(i)
+    if ind=='8':
+        ind='a'
+    activity[i] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS[ind]['x'], cropY=CROPS[ind]['y'], frames=FRAMES_TO_PROCESS)
+    save_zone(i, activity)
+# activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
+# activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
+# activity[3] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['3']['x'], cropY=CROPS['3']['y'], frames=FRAMES_TO_PROCESS)
+# activity[4] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['4']['x'], cropY=CROPS['4']['y'], frames=FRAMES_TO_PROCESS)
+# activity[5] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['5']['x'], cropY=CROPS['5']['y'], frames=FRAMES_TO_PROCESS)
+# activity[6] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['6']['x'], cropY=CROPS['6']['y'], frames=FRAMES_TO_PROCESS)
+# activity[7] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['7']['x'], cropY=CROPS['7']['y'], frames=FRAMES_TO_PROCESS)
+# activity[8] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=FRAMES_TO_PROCESS)
+
+# for i in range(9):
+#     res=[[]]*len(activity[i])
+#     crop_ind = str(i)
+#     if crop_ind=='8':
+#         crop_ind='a'
+#     for act_id, act in enumerate(activity[i]):
+#         act_ts = exp_timestamp + datetime.timedelta(seconds=(act_id+1)/30)
+#         params = 'thresold={},cropX={},cropY={},cropZone={},crop_margin={}'.format(THRESHOLD_ACTIVITY, OUTER_CROP_X, OUTER_CROP_Y, CROPS[crop_ind], CROP_MARGIN)
+#         res[act_id] = [act_ts, None, 'LEDs intensities', 'rpi4', params, act, '']
+
+#     res_df = pd.DataFrame(res, columns=res_fields['fields'])
+#     res_df.to_pickle(ROOT_PATH+'/data/acts/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_z{}_acts.pickle'.format(crop_ind))
