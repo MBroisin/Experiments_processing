@@ -94,7 +94,7 @@ activity = [[]]*9
 if not(args.sample == None):
     video_save_path = ROOT_PATH+'/data/acts/visu/'
     video_save_fname = exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_za_visuacts.mp4'
-    _ = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=args.sample, video_save=True, video_filename=video_save_fname, video_foldername=video_save_path)
+    _ = BA.compute_video_activity(video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=args.sample, video_save=True, video_filename=video_save_fname, video_foldername=video_save_path)
 
 def save_zone(z_i, activity):
     res=[[[], [], [], [], [], [], []]]*len(activity[z_i])
@@ -116,7 +116,7 @@ for i in range(9):
     ind = str(i)
     if ind=='8':
         ind='a'
-    activity[i] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS[ind]['x'], cropY=CROPS[ind]['y'], frames=FRAMES_TO_PROCESS)
+    activity[i] = BA.compute_video_activity(video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS[ind]['x'], cropY=CROPS[ind]['y'], frames=FRAMES_TO_PROCESS)
     save_zone(i, activity)
 # activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
 # activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
