@@ -89,6 +89,66 @@ def compute_video_activity(video, threshold=15, cropX=None, cropY=None, frames='
     
     return list(activities[:(frame_count-2)])
 
+def optimized_compute_video_activity(video, threshold=15, crops=None, frames='all'):
+    
+    cap = cv2.VideoCapture(video)
+    
+    prev_frame = [numpy.array([])]*9
+    activities = numpy.zeros((9,2000000))
+
+    if frames=='all':
+        stop_frame=2000000000
+    else :
+        stop_frame=frames
+        
+    frame_count = 0
+    print('')
+    while(cap.isOpened()):
+        ret, frame = cap.read()
+        frame_count += 1
+        if ret == False or frame_count > stop_frame:
+            print('')
+            break
+        
+        for crop_id in range(9):
+            ind = str(crop_id)
+            if ind=='8':
+                ind='a'
+        
+            cropX = crops[ind]['x']
+            cropY = crops[ind]['y']
+
+            if not(cropX is None):
+                frame_crop = frame[cropX[0]:cropX[1],:]
+            else:
+                frame_crop=frame
+            if not(cropY is None):
+                frame_crop = frame_crop[:,cropY[0]:cropY[1]]
+            
+            mean_frame = numpy.mean(frame_crop, axis=2).astype('uint8')
+            gauss_frame = cv2.GaussianBlur(mean_frame, (11,11), 1)
+            # equal_frame = cv2.equalizeHist(gauss_frame)
+            res_frame = gauss_frame.astype('float')
+
+            if frame_count == 1:
+                prev_frame[crop_id] = res_frame
+                continue
+        
+        
+            act = numpy.abs(res_frame-prev_frame[crop_id]) >= threshold
+            
+            activity = numpy.sum(act)
+            activity = activity/(res_frame.shape[0]*res_frame.shape[1])
+            activities[crop_id,frame_count-1] = activity
+            prev_frame[crop_id] = res_frame
+
+        print('\r'+str(frame_count) + ' frames processed     ', sep=' ', end='', flush=True)
+        
+        
+
+    
+    return list(activities[:, :(frame_count-2)])
+
 
 def compute_video_intensity(video, cropX=None, cropY=None, frames='all'):
     

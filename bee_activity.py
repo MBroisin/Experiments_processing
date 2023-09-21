@@ -73,11 +73,12 @@ for key in CROPS:
 # led0_int = BA.compute_video_intensity(ROOT_PATH+video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frames='all')
 # led1_int = BA.compute_video_intensity(ROOT_PATH+video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frames='all')
 THRESHOLD_ACTIVITY = 10
-FRAMES_TO_PROCESS = 'all'
-activity = [[]]*9
+FRAMES_TO_PROCESS = 100 #'all'
+# activity = [[]]*9
 
 # TIMING : around 11min33s for 100'000 frames - total 12min16s for 106'377 frames (zone 0)
-activity[0] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['0']['x'], cropY=CROPS['0']['y'], frames=FRAMES_TO_PROCESS)
+activities = BA.optimized_compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, crops=CROPS, frames=FRAMES_TO_PROCESS)
+# activity[0] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['0']['x'], cropY=CROPS['0']['y'], frames=FRAMES_TO_PROCESS)
 # activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
 # activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
 # activity[3] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['3']['x'], cropY=CROPS['3']['y'], frames=FRAMES_TO_PROCESS)
@@ -87,6 +88,10 @@ activity[0] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOL
 # activity[7] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['7']['x'], cropY=CROPS['7']['y'], frames=FRAMES_TO_PROCESS)
 # activity[8] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['a']['x'], cropY=CROPS['a']['y'], frames=FRAMES_TO_PROCESS)
 
+
+# print(activity)
+print(activities)
+activity = list(activities)
 for i in range(9):
     res=[[]]*len(activity[i])
     crop_ind = str(i)

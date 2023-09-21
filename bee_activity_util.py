@@ -112,12 +112,12 @@ def save_zone(z_i, activity):
 
 # TIMING : around 11min33s for 100'000 frames - total 12min16s for 106'377 frames (zone 0)
 print('Starting processing {}'.format(video_file))
+activities = BA.optimized_compute_video_activity(video_file, threshold=THRESHOLD_ACTIVITY, crops=CROPS, frames=FRAMES_TO_PROCESS)
 for i in range(9):
     ind = str(i)
     if ind=='8':
         ind='a'
-    activity[i] = BA.compute_video_activity(video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS[ind]['x'], cropY=CROPS[ind]['y'], frames=FRAMES_TO_PROCESS)
-    save_zone(i, activity)
+    save_zone(i, list(activities))
 # activity[1] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['1']['x'], cropY=CROPS['1']['y'], frames=FRAMES_TO_PROCESS)
 # activity[2] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['2']['x'], cropY=CROPS['2']['y'], frames=FRAMES_TO_PROCESS)
 # activity[3] = BA.compute_video_activity(ROOT_PATH+video_file, threshold=THRESHOLD_ACTIVITY, cropX=CROPS['3']['x'], cropY=CROPS['3']['y'], frames=FRAMES_TO_PROCESS)
