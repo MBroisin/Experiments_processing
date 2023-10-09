@@ -104,7 +104,7 @@ def save_zone(z_i, activity):
     params = 'thresold=' + str(THRESHOLD_ACTIVITY) + ',cropX=' + str(OUTER_CROP_X) + ',cropY=' + str(OUTER_CROP_Y) + ',cropZone=' + str(CROPS[crop_ind]) + ',crop_margin=' + str(CROP_MARGIN)
     for act_id, act in enumerate(activity[i]):
         act_ts = exp_timestamp + datetime.timedelta(seconds=(act_id+1)/30)
-        res[act_id] = [act_ts, None, 'LEDs intensities', 'rpi4', params, act, '']
+        res[act_id] = [act_ts, None, 'Activity', 'rpi4', params, act, '']
 
     res_df = pd.DataFrame(res, columns=res_fields['fields'])
     res_df.to_pickle(ROOT_PATH+'/data/acts/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_z{}_acts.pickle'.format(crop_ind))
