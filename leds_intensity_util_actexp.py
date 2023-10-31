@@ -9,12 +9,10 @@ parser.add_argument('-f', '--file', type=str, required=True, help='required, fil
 parser.add_argument('-c', '--computer', type=str, default='beetle', help='optional, name of the computer')
 args = parser.parse_args()
 
-if args.computer == 'beetle':
-    ROOT_PATH   = '/home/hiveopolis/processing_broisin/overview/'
-else :
-    ROOT_PATH   = '/home/sting/processing_broisin/overview/'
+ROOT_PATH               = '/Users/matthieu/Documents/proto3/Graz2023/May/activity/continuous/'
+ROOT_PROCESSING_PATH    = '/Users/matthieu/.ssh/ssh_to_graz/'
 
-PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'
+PARAMS_PATH     = ROOT_PROCESSING_PATH + 'Experiments_processing/processing_parameters/' + args.computer + '/'
 video_file      = args.file
 
 leds_pos_file   = PARAMS_PATH + 'leds_rpi4/leds_pos.json'
@@ -29,8 +27,8 @@ res_fields      = CH.get_results_df_fields(fields_file)
 # matplotlib.pyplot.show()
 # BA.show_video_frame(ROOT_PATH+video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frame_of_interest=10)
 # matplotlib.pyplot.show()
-BA.show_video_frame(video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frame_of_interest=10, figfilename=ROOT_PATH+'/data/leds/visu_checks/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led0crop.png')
-BA.show_video_frame(video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frame_of_interest=10, figfilename=ROOT_PATH+'/data/leds/visu_checks/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led1crop.png')
+BA.show_video_frame(video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frame_of_interest=10, figfilename=ROOT_PATH+'/processed_data/acts/leds/visu_checks/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led0crop.png')
+BA.show_video_frame(video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frame_of_interest=10, figfilename=ROOT_PATH+'/processed_data/acts/leds/visu_checks/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led1crop.png')
 
 led0_int = BA.compute_video_intensity(video_file, cropX=leds_pos['led0']['x'], cropY=leds_pos['led0']['y'], frames='all')
 led1_int = BA.compute_video_intensity(video_file, cropX=leds_pos['led1']['x'], cropY=leds_pos['led1']['y'], frames='all')
@@ -42,7 +40,7 @@ for int_id, intensity in enumerate(led0_int):
     res[int_id] = [int_ts, None, 'LEDs intensities', 'rpi4', params, intensity, '']
 
 res_df = pd.DataFrame(res, columns=res_fields['fields'])
-res_df.to_pickle(ROOT_PATH+'/data/leds/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led0.pickle')
+res_df.to_pickle(ROOT_PATH+'/processed_data/acts/leds/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led0.pickle')
 
 res=[[]]*len(led1_int)
 for int_id, intensity in enumerate(led1_int):
@@ -51,5 +49,6 @@ for int_id, intensity in enumerate(led1_int):
     res[int_id] = [int_ts, None, 'LEDs intensities', 'rpi4', params, intensity, '']
 
 res_df = pd.DataFrame(res, columns=res_fields['fields'])
-res_df.to_pickle(ROOT_PATH+'/data/leds/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led1.pickle')
+res_df.to_pickle(ROOT_PATH+'/processed_data/acts/leds/'+exp_timestamp.strftime('%y%m%dT%H%M%S%Z')+'_led1.pickle')
+# print(led0_int)
 

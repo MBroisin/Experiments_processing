@@ -29,6 +29,28 @@ def datetime_from_filename(filename):
     
     return datetime_object
 
+def datetime_from_logfilename(logfilename):
+    if not(logfilename.endswith('.log')):
+        if ECHO_DEBUG:
+            print("Unknown file type. Must be log")
+        return None
+    
+    if ECHO_CODE:
+        print("Looking for file : {}".format(logfilename))
+
+    try :
+        datetime_str = logfilename.split('/')[-1].split('_')[0][2:-3]
+        if ECHO_CODE:
+            print("Corresponding datetime string : {}".format(datetime_str))
+        datetime_object = datetime.datetime.strptime(datetime_str, "%y-%m-%dT%H%M%S")
+        datetime_object = pytz.utc.localize(datetime_object)
+    except:
+        if ECHO_DEBUG:
+            print("Unknown file format. Must be datetime_xxx.log")
+        return None
+    
+    return datetime_object
+
 def get_frame_position(frame_config_fname, date_time):
     try :
         fp = open(frame_config_fname)
