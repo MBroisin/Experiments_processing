@@ -14,7 +14,7 @@ if args.computer == 'beetle':
 else :
     ROOT_PATH   = '/home/sting/processing_broisin/overview/'
 
-PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'
+PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/' + args.computer + '/'
 video_file      = args.file
 
 leds_pos_file   = PARAMS_PATH + 'leds_rpi4/leds_pos.json'
