@@ -239,3 +239,7 @@ def butter_highpass_filter(data, cutoff, fs, order=5):
     b, a = scipy.signal.butter(order, cutoff, fs=fs, btype='high', analog=False)
     y = scipy.signal.lfilter(b, a, data)
     return y
+
+def butter_passband_filter(data, cutoff_low, cutoff_high, fs, order=5):
+    interm = butter_lowpass_filter(data, cutoff_high, fs, order=order)
+    return butter_highpass_filter(interm, cutoff_low, fs, order=order)
