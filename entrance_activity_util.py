@@ -10,8 +10,6 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-f', '--file', type=str, required=True, help='required, filename of input file')
 parser.add_argument('-c', '--computer', type=str, default='beetle', help='optional, name of the computer')
-parser.add_argument('-p', '--frames', type=str, default='all', help='optional, number of frames to process ("all" for all)')
-parser.add_argument('-s', '--sample', type=int, default=None, help='optional, number of frames to process and output visu for (None for no visu)')
 args = parser.parse_args()
 
 
@@ -90,16 +88,16 @@ while True:
 
     area_cnt_tot[frame_cnt] = area_cnt 
 
-    cv2.rectangle(frame, (10, 2), (100,20), (255,255,255), -1)
-    # cv2.putText(frame, str(analysis[0]-1), (15, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5 , (0,0,0))cd 
-    cv2.putText(frame, str(area_cnt), (15, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5 , (0,0,0))
-    cv2.imshow('Frame', frame)
-    cv2.imshow('FG Mask', output_msk)
+#     cv2.rectangle(frame, (10, 2), (100,20), (255,255,255), -1)
+#     # cv2.putText(frame, str(analysis[0]-1), (15, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5 , (0,0,0))cd 
+#     cv2.putText(frame, str(area_cnt), (15, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5 , (0,0,0))
+#     cv2.imshow('Frame', frame)
+#     cv2.imshow('FG Mask', output_msk)
     
-    keyboard = cv2.waitKey(30)
-    if keyboard == 'q' or keyboard == 27:
-        break
-cv2.destroyAllWindows()
+#     keyboard = cv2.waitKey(30)
+#     if keyboard == 'q' or keyboard == 27:
+#         break
+# cv2.destroyAllWindows()
 
 
 res_act = [x for x in area_cnt_tot if not(x==None)]
