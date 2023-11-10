@@ -5,10 +5,24 @@ import activity_experiments_python.actuation_management as AM
 import pandas as pd
 import datetime
 
-ROOT_PATH       = '/Users/matthieu/.ssh/ssh_to_graz/wdd_beetle_testvideos/'
-COMPUTER        = 'beetle'
-PARAMS_PATH     = ROOT_PATH + '../Experiments_processing/processing_parameters/'+COMPUTER+'/'
-video_file      = 'v_hive1_rpi5_230727-130000-utc.mp4'
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--file', type=str, required=True, help='required, filename of input file')
+parser.add_argument('-c', '--computer', type=str, default='beetle', help='optional, name of the computer')
+parser.add_argument('-p', '--frames', type=str, default='all', help='optional, number of frames to process ("all" for all)')
+parser.add_argument('-s', '--sample', type=int, default=None, help='optional, number of frames to process and output visu for (None for no visu)')
+args = parser.parse_args()
+
+
+if args.computer == 'beetle':
+    ROOT_PATH   = '/home/hiveopolis/processing_broisin/overview/'
+else :
+    ROOT_PATH   = '/home/sting/processing_broisin/overview/'
+
+
+PARAMS_PATH     = ROOT_PATH + 'Experiments_processing/processing_parameters/'+args.computer+'/'
+video_file      = args.file
 
 tunnel_pos_file = PARAMS_PATH + 'entrance_rpi5/tunnel_pos.json'
 fields_file     = PARAMS_PATH + 'general/fields.json'
@@ -17,9 +31,9 @@ exp_timestamp   = CH.datetime_from_filename(video_file)
 tunnel_pos      = CH.get_tunnel_position(tunnel_pos_file, exp_timestamp)
 res_fields      = CH.get_results_df_fields(fields_file)
 
-import matplotlib.pyplot
-BA.show_video_frame(ROOT_PATH+video_file, cropX=tunnel_pos['x'], cropY=tunnel_pos['y'], frame_of_interest=10)
-matplotlib.pyplot.show()
+# import matplotlib.pyplot
+# BA.show_video_frame(ROOT_PATH+video_file, cropX=tunnel_pos['x'], cropY=tunnel_pos['y'], frame_of_interest=10)
+# matplotlib.pyplot.show()
 
 import cv2
 import numpy
