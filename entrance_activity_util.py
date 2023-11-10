@@ -37,7 +37,7 @@ import cv2
 import numpy
 
 backSub = cv2.createBackgroundSubtractorKNN()
-capture = cv2.VideoCapture(ROOT_PATH+video_file)
+capture = cv2.VideoCapture(video_file)
 if not capture.isOpened():
     print('Unable to open: ' + video_file)
     exit(0)
